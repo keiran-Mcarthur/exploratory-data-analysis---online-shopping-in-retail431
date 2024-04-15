@@ -1,6 +1,6 @@
 import pandas as pd 
 from sqlalchemy import create_engine
-import psycopg2
+from credentials import load_yaml
 class RDSDatabaseConnector:
     def __init__(self, credentials: dict) -> None:
         self.credentials = credentials
@@ -15,12 +15,12 @@ class RDSDatabaseConnector:
         PASSWORD = self.credentials['RDS_PASSWORD']
         PORT = '5432'
         DATABASE = self.credentials['RDS_DATABASE']
-        engine = engine_create(f"{DATABASE_TYPE}+{DBAPI}://{USER}:{PASSWORD}@{ENDPOINT}:{PORT}/{DATABASE}")
+        engine = create_engine(f"{DATABASE_TYPE}+{DBAPI}://{USER}:{PASSWORD}@{ENDPOINT}:{PORT}/{DATABASE}")
         return engine
     
  
 
-    def customer_activity_data_extraction(self):
+    def customer_activity_data(self):
         
         sql_query = f"SELECT * FROM customer_activity"
         try:
@@ -43,11 +43,11 @@ credentials = {
     'port': 'RDS_PORT',
     'database': 'RDS_DATABASE'
 }
-credentials_ymal = load_yaml()
-test = RDSDatabaseConnector(credentials_ymal)
-db_connector.create_engine() 
+credentials_yaml = load_yaml("credentials.yaml")
+test = RDSDatabaseConnector(credentials_yaml)
+test.create_engine() 
 
-customer_activity_data = db_connector.fetch_customer_activity_data()
+customer_activity_data = test.customer_activity_data()
 
 file_path = 'customer_activity.csv'
-saved_as_csv(customer_activity_data, file_path)
+test.saved_as_csv(customer_activity_data, file_path)

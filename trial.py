@@ -3,11 +3,11 @@ from sqlalchemy import create_engine
 import psycopg2
 class RDSDatabaseConnector:
     def __init__(self, credentials):
-        self.username = credentials.get('RDS_user')
-        self.password = credentials.get('RDS_password')
-        self.host = credentials.get('RDS_host')
-        self.port = int(credentials.get('RDS_port',5432))
-        self.database = credentials.get('RDS_database')
+        self.username = credentials.get('RDS_USER')
+        self.password = credentials.get('RDS_PASSWORD')
+        self.host = credentials.get('RDS_HOST')
+        self.port = int(credentials.get('RDS_PORT',5432))
+        self.database = credentials.get('RDS_DATABASE')
 
     def create_engine(self):
         #credentials = RDSDatabaseConnector().load_yaml()
@@ -40,11 +40,11 @@ class RDSDatabaseConnector:
     
 
 credentials = { 
-    'username': 'RDS_user',
-    'password': 'RDS_password',
-    'host': 'RDS_host',
-    'port': 'RDS_port',
-    'database': 'RDS_database'
+    'username': 'RDS_USER',
+    'password': 'RDS_PASSWORD',
+    'host': 'RDS_HOST',
+    'port': 'RDS_PORT',
+    'database': 'RDS_DATABASE'
 }
 
 db_connector = RDSDatabaseConnector().load_yaml(credentials)

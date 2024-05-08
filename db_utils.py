@@ -1,6 +1,6 @@
-import pandas as pd 
 from sqlalchemy import create_engine
 from credentials import load_yaml
+import pandas as pd 
 class RDSDatabaseConnector:
     def __init__(self, credentials: dict) -> None:
         self.credentials = credentials

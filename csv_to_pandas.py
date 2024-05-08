@@ -6,4 +6,3 @@ def csv_to_pd_df():
     print(customer_activity_df)
 
 csv_to_pd_df()
-   

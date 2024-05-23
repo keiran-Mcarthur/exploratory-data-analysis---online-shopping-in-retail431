@@ -3,8 +3,9 @@ import numpy as np
 from matplotlib import pyplot
 class DataFrameInfo():
     def __init__(self,customer_activity_df):
-         self. customer_activity_df = customer_activity_df
+        self. customer_activity_df = customer_activity_df
     
+   
     def describe(self):
         print(round(customer_activity_df.describe(),1))
         customer_activity_df.info()
@@ -34,14 +35,14 @@ class DataFrameInfo():
         print(null_count) 
         null_as_a_precentage = customer_activity_df.isna().mean()*100
         print(round(null_as_a_precentage,1))
-    
-    
-    
-    
+       
 customer_activity_df = pd.read_csv('customer_activity.csv')
 test = DataFrameInfo(customer_activity_df) 
+test.describe()
 test.statistics_extraction()
 test.category_distinct_values()
 test.null_values()
+
+
 
 

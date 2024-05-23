@@ -18,10 +18,7 @@ class RDSDatabaseConnector:
         engine = create_engine(f"{DATABASE_TYPE}+{DBAPI}://{USER}:{PASSWORD}@{ENDPOINT}:{PORT}/{DATABASE}")
         return engine
     
- 
-
     def customer_activity_data(self):
-        
         sql_query = f"SELECT * FROM customer_activity"
         engine = self.create_engine()
         try:
@@ -32,8 +29,6 @@ class RDSDatabaseConnector:
         except Exception as e:
             print(f"Error fetching data from the database: {e}")
             
-
-        
     def saved_as_csv(self, df, file_path):
         df.to_csv(file_path, index=False)
     

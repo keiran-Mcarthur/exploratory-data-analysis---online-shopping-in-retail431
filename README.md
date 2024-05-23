@@ -41,3 +41,7 @@ This class is called DataFrameTransform and has method which contained the insta
 
 ### Data_Insight
 This Class is called Data_insights and has method which contained the instance of the class (self) with customer_activity_df as a parameter. This is followed by the following methods(weekend_sales, revenue_based_on_region, sales_based_on_trafic_type, sales_based_on_month, precentage_of_time_of_each_task, popular_informational_tasks, popular_administrative_tasks, operating_systems_used, precent_operating_system_used, visitor_based_operating_systems, browsers_based_on_operating_systems, revenue_by_traffic_based_on_region, traffic_bounce_rate, months_sales_from_ads, precent_of_customer_type_purchase and type_of_traffic_contributing_to_sales) which contain graphs that are required for the Milestone 4 task. These methods contain a mixture of graphs and charts that best visualise the anwser to each of the question in Mileston 4. Example of some of these graphs are the revenue_based_on_region method contains a bar chart of revenue based on region(fig10), precentage_of_time_of_each_task which contains a pie chart of the precentage of time spent on administrative, product_related and informational(fig11) and finally revenue_by_traffic_based_on_region method which contains a bar chart of revenue from traffic_type based region(fig12).
+
+# Appendics 
+## Fig 1 
+![fig1](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/2252bd5a-60c8-4eb5-804d-cb54754385d4)

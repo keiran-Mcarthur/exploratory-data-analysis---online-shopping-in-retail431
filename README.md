@@ -5,6 +5,9 @@ The aim of this project is to complete an exploratory data analysis of online sh
 
 The aim by the end of this project is to eventaully show my skills as a data analysis and how I can use these skills to make data driven decision. So far, thoughout this project I haved learned so much includig the importance of keeping your database connection details safe especially when working with Amazon web service (AWS), but also the importance of code structure and writing when running and solving issuses with the code. I also learnt the importance of using for loops to reduce reptition of certain code to help improve readability code but also my code structure and length. Futhermore, I have also learned the importance graph selection when it comes to data visualisation and the affect it can have on the readability and interpertation of my finding to others. 
 
+## Useage Instructions 
+To use the python files within this repository 
+
 # File Structure 
 ## .gitignore and New Text Document.txt 
 These files were created to keep the credentials of the RDS database secure through placing the credentials. yaml file with a .gitignore file it ensures that the credentials are not pushed to github when you upload your files. The .txt was created to write the path of the credentials.yaml so the .gitignore knew where to idnentify the file. 

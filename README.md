@@ -70,6 +70,7 @@ This Class is called Data_insights and has method which contains the instance of
 
 ## fig 9 - Correleation Matrix
 
+![fig 9](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/fa127e1d-ea9f-4672-9283-52ca08596927)
 
 ## fig 10 - barchart revenue based on month
 ![fig 10](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/7b5eda5a-843e-45ba-b9a4-257ce935e019)

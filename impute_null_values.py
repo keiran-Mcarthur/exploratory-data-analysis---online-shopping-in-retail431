@@ -6,11 +6,20 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 class plotter():
+    """This class is called plotter.
+    key functions:
+    self. customer_activity_df = customer_activity_df -- used to create instance(self) which is used with customer_activity_df so can be used throughtout the class.
+    """
     def __init__(self,customer_activity_df):
         self. customer_activity_df = customer_activity_df
     
     
     def visualise_null_values(self):
+        """visualise null values in the dataset.
+        Key functions:
+        .isnull().sum() -- counts the null values and returns them as a sum.
+        pyplot.barh() --plot the count of nulls as a barchart.
+        """
         null_count = customer_activity_df.isnull().sum()
         pyplot.figure(figsize=(10, 6))
         pyplot.barh(null_count.index, null_count, color='orange', label='After Removal')
@@ -21,30 +30,45 @@ class plotter():
         pyplot.show()
 
     def skewed_data(self):
+        """Visualise the skew data in numeric columns.
+        key functions:
+        for loop -- Iterates through the columns that are in the numeric variables.
+        customer_activity_df.hist() -- creates an histogram for each of the columns in the for loop.
+        """
         numeric = [ 'int64', 'float64']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in numeric]:
-          customer_activity_df.hist(column=[c], bins=40)
-          pyplot.title('Histogram of Skew Data for {}'.format(c))
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in numeric]:
+          customer_activity_df.hist(column=[columns], bins=40)
+          pyplot.title('Histogram of Skew Data for {}'.format(columns))
           pyplot.show()
-          print(f"Skew of administrative column is {customer_activity_df[c].skew()}")
+          print(f"Skew of administrative column is {customer_activity_df[columns].skew()}")
         qq_plot = qqplot(customer_activity_df['product_related_duration'] , scale=1 ,line='q')
         pyplot.title('QQ plot of Skew Data for Product Related Duration')
         pyplot.show()
     
     def outliers_detection_visual(self):
+        """Visualises the outliers in numeric columns.
+        key functions:
+        for loop -- Iterates through the columns that are in the numeric variables.
+        customer_activity_df.hist() -- creates an histogram for each of the columns in the for loop.
+        customer_activity_df.boxplot() -- creates an boxplot for each of the columns in the for loop.
+        """
         numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in numerics]:
-          customer_activity_df.hist(column=[c], bins=40)
-          pyplot.title('Histogram of outliers for  {}'.format(c))
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in numerics]:
+          customer_activity_df.hist(column=[columns], bins=40)
+          pyplot.title('Histogram of outliers for  {}'.format(columns))
           pyplot.show()
         numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in numerics]:
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in numerics]:
           pyplot.figure()
-          customer_activity_df.boxplot(column=[c], showfliers=True, whis=1.5)
-          pyplot.title('Box plot with whiskers and scatter points of {}'.format(c))
+          customer_activity_df.boxplot(column=[columns], showfliers=True, whis=1.5)
+          pyplot.title('Box plot with whiskers and scatter points of {}'.format(columns))
           pyplot.show()
     
     def outliers_detection_statisical(self):
+        """Calculates IQR for each of the numeric columns.
+        key functions:
+        .quantile() -- used to calculate the first and third quantile for each column which can be used to detect outliers based on IQR. 
+        """
         Q1 = customer_activity_df['page_values'].quantile(0.25)
         Q3 = customer_activity_df['page_values'].quantile(0.75)
         IQR = Q3 - Q1
@@ -59,35 +83,56 @@ class plotter():
         print(customer_activity_df['page_values'].value_counts())
     
     def frequnecy_tables(self):
+        """Visualise categorical columns.
+        key functions:
+        for loop -- Iterates through the columns that are in the category variable.
+        customer_activity_df.hist() -- creates an histogram for each of the columns in the for loop.
+        """
         category = ['category', 'object']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in category]:
-            frequency_table = customer_activity_df[c].value_counts()
-            frequency_table.plot(kind='bar', column=[c])
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in category]:
+            frequency_table = customer_activity_df[columns].value_counts()
+            frequency_table.plot(kind='bar', column=[columns])
             pyplot.xlabel('Categories')
             pyplot.ylabel('Frequency')
-            pyplot.title('Frequncy table of {}'.format(c))
+            pyplot.title('Frequncy table of {}'.format(columns))
             pyplot.show()
     
    
 class DataFrameTransform():
+     """This class is called DataFrameTransform.
+     key functions:
+     self. customer_activity_df = customer_activity_df -- used to create instance(self) which is used with customer_activity_df so can be used throughtout the class.
+     self.df_copy_deep = self.create_copy_deep() -- which used to create an instance of the copied dataframe.
+     """
      def __init__(self,customer_activity_df):
         self. customer_activity_df = customer_activity_df
         self.df_copy_deep = self.create_copy_deep()
      
      
      def null_values(self):
+        """Calculates null values in dataset.
+        Key functions:
+        .isnull().sum() -- counts the null values and return them as a sum. 
+        .isna().mean() * 100 -- converts the count of null values to a precentage.
+        """
         null_count = customer_activity_df.isna().sum()  
         print(null_count) 
         null_as_a_precentage = customer_activity_df.isna().mean()*100
         print(round(null_as_a_precentage,1))
     
      def normality_test(self):
+        """Test of normality in numeric columns.
+        key functions:
+        for loop -- iterates through the columns that are in the numeric variable.
+        normaltest() -- calculates the p value for each of the variables that are a numeric data type.
+        customer_activity_df.hist() -- creates an histogram for each of the columns in the for loop.
+        """
         numeric = [ 'int64', 'float64']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in numeric]:
-         stat, p = normaltest(customer_activity_df[c], nan_policy='omit')
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in numeric]:
+         stat, p = normaltest(customer_activity_df[columns], nan_policy='omit')
          print('Statistics=%.3f, p=%.3f' % (stat, p))
-         customer_activity_df.hist(column=[c],bins=7,edgecolor='black')
-         pyplot.title('Histograms of normality for {}'.format(c))
+         customer_activity_df.hist(column=[columns],bins=7,edgecolor='black')
+         pyplot.title('Histograms of normality for {}'.format(columns))
          pyplot.show() 
         
         qq_plot = qqplot(customer_activity_df['page_values'] , scale=1 ,line='q')
@@ -95,6 +140,10 @@ class DataFrameTransform():
         pyplot.show()
 
      def impute_nulls(self):
+        """Imputation of nulls values.
+        key functions:
+        .fillna() -- impute the null values on either the mean or median for numeric columns depending on the normality test and mode for the category columns.
+        """
         customer_activity_df['administrative'] = customer_activity_df['administrative'].fillna(customer_activity_df['administrative'].mean())
         customer_activity_df['administrative_duration'] = customer_activity_df['administrative_duration'].fillna(customer_activity_df['administrative_duration'].median())
         customer_activity_df['informational_duration'] = customer_activity_df['informational_duration'].fillna(customer_activity_df['informational_duration'].median())
@@ -104,23 +153,40 @@ class DataFrameTransform():
         customer_activity_df['operating_systems'] = customer_activity_df['operating_systems'].fillna(mode)
          
      def create_copy_deep(self):
+        """Creating a copy of the dataframe(df).
+        key functions:
+        self.impute_nulls() -- ensure the impute_nulls method remove nulls in the new df.
+        .copy(deep=True) -- creates a new copy of the customer_activity_df and ensure index remains the same in the new df.
+        return df_copy_deep -- returns the new df.
+        """ 
         self.impute_nulls()
         df_copy_deep = customer_activity_df.copy(deep=True)
         return df_copy_deep
        
      def skew_correction(self):
+        """Corrected skew data in numeric columns.
+        key functions:
+        for loop -- Iterates through the columns that are in the numeric variables.
+        sns.histplot() -- creates an histogram for each of the columns in the for loop.
+        """
         small_constant = 0.001
         numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-        for c in [c for c in customer_activity_df.columns if customer_activity_df[c].dtype in numerics]:
-            customer_activity_df[c] = np.log(customer_activity_df[c]+ small_constant)
-            skewness_after_log_transform = customer_activity_df[c].skew()
+        for columns in [columns for columns in customer_activity_df.columns if customer_activity_df[columns].dtype in numerics]:
+            customer_activity_df[columns] = np.log(customer_activity_df[columns]+ small_constant)
+            skewness_after_log_transform = customer_activity_df[columns].skew()
             print('Skewness after log transform:', skewness_after_log_transform)
-            sns.histplot(customer_activity_df[c], kde=True)
+            sns.histplot(customer_activity_df[columns], kde=True)
             pyplot.title('Dataset  After Log Transform')
             pyplot.show()
      
      
      def outliers_trimming(self):
+         """Winsorization on outliers.
+         key functions:
+         for loop -- iterates through the columns that are in the columns_to_clean and calculates the IQR, lower and upper bounds.
+         np.where -- used the to trim the outliers based on the lower and upper bounds.
+         return customer_activity_df -- return the customer_activity_df with the outliers trimmed.
+         """
          columns_to_clean = ['informational', 'informational_duration', 'page_values']
          columns_to_clean = ['informational', 'informational_duration', 'page_values']
          for column in columns_to_clean:
@@ -136,6 +202,13 @@ class DataFrameTransform():
          return customer_activity_df
     
      def outliers_removal(self):
+         """Removal of outliers.
+
+         key functions:
+         for loop -- iterates through the columns that are in the columns_to_clean and calculates the IQR, lower and upper bounds.
+         nested for loop -- iterates through the customer_activity_df[columns] and if a data point is less or more then the lower and upper bounds it is removed.
+         return customer_activity_df -- returns the customer_activity_df with the outliers removed.
+         """
          columns_to_clean = ['product_related', 'exit_rates']
          for column in columns_to_clean:
            Q1 = customer_activity_df[column].quantile(0.25)
@@ -156,10 +229,22 @@ class DataFrameTransform():
          return customer_activity_df
 
      def product_related_duration_outliers_removal(self):
+         """Outliers removal.
+         
+         key function:
+         customer_activity_df['product_related_duration'][customer_activity_df['product_related_duration'] > -5] -- removes outliers that are greter than -5.
+         """
          customer_activity_df['product_related_duration'] = customer_activity_df['product_related_duration'][customer_activity_df['product_related_duration'] > -5]
          print(f"Skew of product_related_duration column is {customer_activity_df['product_related_duration'].skew()}")
     
      def collinearity(self):
+         """Correlation Matrix.
+
+         key functions:
+         .select_dtypes(include=['number']).columns -- includes columns that numeric.
+         .corr() -- used to create an correlation between variables.
+         sns.heatmap -- plots the correaltion matrix as an heatmap.
+         """
          numeric_columns = customer_activity_df.select_dtypes(include=['number']).columns
          customer_activity_df_numeric = customer_activity_df[numeric_columns]
          correlation_matrix = customer_activity_df_numeric.corr()
@@ -169,25 +254,49 @@ class DataFrameTransform():
          pyplot.show()
      
      def dropped_overcorrealated_variables(self):
+         """Overcorrelated variables dropped.
+
+         key functions:
+         .drop() -- used to drop all overcorrelated variables. Axis=1 refers to the columns and inplace=True mean that the df will be the same when variables are removed.
+         """
          customer_activity_df.drop(['administrative', 'administrative_duration'], axis=1, inplace=True)
 
 class data_insight():
+    """This class is called data_insight
+    key functions:
+    self.customer_activity_instance = customer_activity_instance -- used to create instance(self) which is used to allow use to use the copied df (df_copied_deep) created in the other class
+    """
     def __init__(self, customer_activity_instance):
        self.customer_activity_instance = customer_activity_instance
 
     
     def weekend_sales(self):
+       """Barchart of sales.
+
+       key functions:
+       sns.barplot() -- creates a barchart of sales at weekend compared to weekday.
+       """
        sns.barplot(data=customer_activity_instance.df_copy_deep, y='revenue', x='weekend')
        pyplot.title('Barchart of Sales at Weekends')
        pyplot.show()     
    
     def revenue_based_on_region(self):
+       """Barchart of sales.
+
+       key functions:
+       sns.barplot() -- creates a barchart of sales based on region.
+       """
        sns.barplot(data=customer_activity_instance.df_copy_deep, y='revenue', x='region')
        pyplot.title('Barchart of Sales based on Region')
        pyplot.xticks(rotation=45)
        pyplot.show()   
      
     def sales_based_on_trafic_type(self):
+       """Barchart of sales. 
+
+       key functions:
+       sns.barplot() -- creates a barchart of sales based on traffic_type.
+       """
        pyplot.figure(figsize=(16,10))
        sns.barplot(data=customer_activity_instance.df_copy_deep, y='revenue', x='traffic_type')
        pyplot.title('Barchart of Sales based on Traffic Type')
@@ -195,11 +304,24 @@ class data_insight():
        pyplot.show()
     
     def sales_based_on_month(self): 
+       """Barchart of sales.
+
+       key functions:
+       sns.barplot() -- creates a barchart of sales based on month.
+       """
        sns.barplot(data=customer_activity_instance.df_copy_deep, y='revenue', x='month')
        pyplot.title('Barchart of Sales based on Month')
        pyplot.show()
     
     def precentage_of_time_of_each_task(self):
+       """Pie chart of precentage of time spent on each task. 
+
+       key functions:
+       .sum() -- calculates the sum time spent on administrative, product_related, informational tasks. 
+       total_duration_all_task -- adds all the times ups to calculate total time. 
+       precentage_admin, info, product -- calculates the time as a precentage for the three groups. 
+       pyplot.pie() -- used to display the precentages as a pie chart.
+       """
        total_duration_admin = customer_activity_instance.df_copy_deep['administrative_duration'].sum() 
        total_duration_info = customer_activity_instance.df_copy_deep['informational_duration'].sum() 
        total_duration_product = customer_activity_instance.df_copy_deep['product_related_duration'].sum()
@@ -215,19 +337,37 @@ class data_insight():
        pyplot.title('Percentage of time spent on each task')
        pyplot.show()
     
-    def popular_informational_tasks(self):      
+    def popular_informational_tasks(self):
+       """Barchart of popular informational tasks. 
+
+       key functions:
+       total_duration.plot() -- creates a barchart of each informational task based on the total_duration variable.
+       """  
        task_counts = customer_activity_instance.df_copy_deep['informational'].value_counts()
        total_duration = customer_activity_instance.df_copy_deep.groupby('informational')['informational_duration'].sum()
        total_duration.plot(kind='bar', xlabel='informational', ylabel='Frequency', title='Frequency of Informational tasks')
        pyplot.show()
     
-    def popular_administrative_tasks(self):  
+    def popular_administrative_tasks(self):
+       """Barchart of popular administrative tasks.
+
+       key functions:
+       total_duration.plot() -- creates a barchart of each administrative task based on the total_duration variable.
+       """
        task_counts = customer_activity_instance.df_copy_deep['administrative'].value_counts()
        total_duration = customer_activity_instance.df_copy_deep.groupby('administrative')['administrative_duration'].sum()
        total_duration.plot(kind='bar', xlabel='administrative', ylabel='Frequency', title='Frequency of Administrative tasks')
        pyplot.show()
     
     def operating_systems_used(self):
+       """Barchart of operating systems used.
+
+       key functions:
+       mobile_os, desktop_os, other_os -- splits the operating systems into three groups.
+       .isin() -- checks that the following operating systems are in the columns and in the assigned group.
+       .value_counts() -- counts the occurance of each of the operating systems in the column.
+       pyplot.bar() -- plots the values counts as a barchart.
+       """
        mobile_os = ['Android', 'iOS']
        desktop_os = ['Windows', 'MACOS', 'ChromeOS', 'Ubuntu',]
        other_os = ['Other']
@@ -243,6 +383,14 @@ class data_insight():
        pyplot.show()
     
     def precent_operating_system_used(self):
+       """Pie chart of precentage of time of each operating system used.
+
+       key functions:
+       mobile_count, Desktop_count, Other_count  -- counts the occurance of each of the operating systems in the column. 
+       total_value_count -- adds all the counts up together to calculate total time.
+       precentage_mobile, Desktop, Other -- calculates the time as a precentage for the three groups.
+       pyplot.pie() -- used to display the precentages as a pie chart.
+       """
        mobile_count = customer_activity_instance.df_copy_deep['category'].value_counts()['Mobile']
        Desktop_count = customer_activity_instance.df_copy_deep['category'].value_counts()['Desktop']
        Other_count = customer_activity_instance.df_copy_deep['category'].value_counts()['Other']
@@ -258,7 +406,12 @@ class data_insight():
        pyplot.title('Percentage of time spent on each Operating Systems')
        pyplot.show()
     
-    def visitor_based_operating_systems(self):
+    def visitor_based_on_operating_systems(self):
+       """Barchart of visitors based on operating systems.
+
+       key functions:
+       sns.countplot() -- creates a barchart of traffic_type based on operating systems.
+       """
        mobile_os = ['Android', 'iOS']
        desktop_os = ['Windows', 'MACOS', 'ChromeOS', 'Ubuntu',]
        sns.countplot(x=customer_activity_instance.df_copy_deep['traffic_type'], hue=customer_activity_instance.df_copy_deep['operating_systems'].apply(lambda x: 'Mobile' if x in mobile_os else 'Desktop'), data=customer_activity_instance.df_copy_deep, palette='muted')
@@ -269,6 +422,11 @@ class data_insight():
        pyplot.show()
     
     def browsers_based_on_operating_systems(self):
+       """Barchart of browers based on operating systems.
+
+       key functions:
+       sns.countplot() -- creates a barchart of browers based on operating systems.
+       """
        mobile_os = ['Android', 'iOS']
        desktop_os = ['Windows', 'MACOS', 'ChromeOS', 'Ubuntu',]
        sns.countplot(x=customer_activity_instance.df_copy_deep['browser'], hue=customer_activity_instance.df_copy_deep['operating_systems'].apply(lambda x: 'Mobile' if x in mobile_os else 'Desktop'), data=customer_activity_instance.df_copy_deep, palette='muted')
@@ -279,6 +437,12 @@ class data_insight():
        pyplot.show()
     
     def revenue_by_traffic_based_on_region(self):
+       """Barchart of revenue of traffic_type based on region.
+
+       key functions:
+       pivot_table() -- creates pivot table for the data.
+       pivot_table.plot() -- creates a stacked barchart of revenue from traffic_type based on region.
+       """
        pivot_table = customer_activity_instance.df_copy_deep.pivot_table(index='traffic_type', columns='region', values='revenue',aggfunc='mean')
        pivot_table.plot(kind='bar', stacked=True)
        pyplot.xlabel('Traffic Type')
@@ -289,11 +453,24 @@ class data_insight():
        pyplot.show()
     
     def traffic_bounce_rate(self):
+       """Barchart of bounce rate of traffic types.
+
+       key functions:
+       sns.barplot() -- creates a barchart of bounce rates for traffic types.
+       """
        pyplot.figure(figsize=(16,10))
        sns.barplot(data=customer_activity_instance.df_copy_deep, y='bounce_rates', x='traffic_type')
        pyplot.title('Barchart of Bounce Rates based on traffic type')
        pyplot.xticks(rotation=45)
        pyplot.show()
+
+    def traffic_bounce_rate_based_on_region(self):
+       """Barchart of bounce rate of traffic_type based on region.
+
+       key functions:
+       pivot_table() -- creates pivot table for the data.
+       pivot_table.plot() -- creates a stacked barchart of bounce rates for traffic_type based on region.
+       """
        pivot_table = customer_activity_instance.df_copy_deep.pivot_table(index='traffic_type', columns='region', values='bounce_rates',aggfunc='mean')
        pivot_table.plot(kind='bar', stacked=True)
        pyplot.xlabel('Traffic Type')
@@ -304,6 +481,12 @@ class data_insight():
        pyplot.show()
     
     def months_sales_from_ads(self):
+       """Barchart of revenue of month based on traffic_type.
+
+       key functions:
+       pivot_table() -- create pivot table for the data.
+       pivot_table.plot() -- creates a stacked barchart of revenue from month based on traffic_type.
+       """
        num_colours = 20
        custom_palette = sns.color_palette('tab20', num_colours)
        pivot_table = customer_activity_instance.df_copy_deep.pivot_table(index='month', columns='traffic_type', values='revenue',aggfunc='mean')
@@ -317,6 +500,12 @@ class data_insight():
        pyplot.show()
     
     def precent_of_customer_type_purchase(self):
+       """Precent of purchase rate based on customer type.
+
+       key functions:
+       .groupby() -- calculates the purchase rate for customer type.
+       purchase_rate.plot -- creates a barchart of purchase rate based on customer type.
+       """
        purchase_rate = customer_activity_instance.df_copy_deep.groupby('visitor_type')['revenue'].mean()*100
        pyplot.figure(figsize=(8, 6))
        purchase_rate.plot(kind='bar', color='skyblue')
@@ -328,6 +517,14 @@ class data_insight():
        pyplot.show()
     
     def type_of_traffic_contributing_to_sales(self):
+       """Barchart of traffic_type contributing to sales.
+
+       key functions:
+       Direct_traffic, Social_traffic, Advertising_traffic  -- splits the traffic type into three groups.
+       .isin() -- checks that the following traffic types are in the column and are in the assigned group.
+       .value_counts() -- counts the occurance of each of the traffic types in the column.
+       pyplot.bar() -- plots the values counts as a barchart. 
+       """
        Direct_traffic = ['Google search', 'Bing search', 'Direct Traffic', 'Yahoo Search', 'Yandex search',  'DuckDuckGo search', 'Other' ]
        Social_traffic = ['Facebook ads', 'Instagram ads', 'Youtube ads', 'Twitter', 'Youtube channel', 'Instagram Page', 'Tik Tok ads', 'Facebook page', 'Tik Tok page', 'Pinterest', 'Other']
        Advertising_traffic = ['Affiliate marketing', 'Newsletter', 'Other']
@@ -373,11 +570,14 @@ data.popular_informational_tasks()
 data.popular_administrative_tasks() 
 data.operating_systems_used()
 data.precent_operating_system_used()
-data.visitor_based_operating_systems()
+data.visitor_based_on_operating_systems()
 data.browsers_based_on_operating_systems()
 data.revenue_by_traffic_based_on_region()
 data.traffic_bounce_rate()
+data.traffic_bounce_rate_based_on_region()
 data.months_sales_from_ads()
 data.precent_of_customer_type_purchase()
 data.type_of_traffic_contributing_to_sales()
-
+help(plotter)
+help(DataFrameTransform)
+help(data_insight)

@@ -44,7 +44,8 @@ This Class is called Data_insights and has method which contains the instance of
 ![fig1](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/2252bd5a-60c8-4eb5-804d-cb54754385d4)
 
 ## fig 2 - Converting csv to pandas df 
-![fig 2](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/7a580ee3-6160-4a08-8963-8628382c439b)
+![fig 2](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/4ff685e0-ea61-4809-b790-4425cd1e8d30)
+
 
 ## fig 3 - outliers_detection_visual
 ![fig 3](https://github.com/keiran-Mcarthur/exploratory-data-analysis---online-shopping-in-retail431/assets/159048029/8ee68441-48f9-4996-adad-9b385c1f57e2)

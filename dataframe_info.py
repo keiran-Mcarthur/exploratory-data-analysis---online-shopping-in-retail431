@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot
+
 class DataFrameInfo():
     def __init__(self,customer_activity_df):
         self. customer_activity_df = customer_activity_df

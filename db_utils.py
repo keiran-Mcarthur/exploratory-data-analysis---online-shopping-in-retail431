@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from credentials import load_yaml
 import pandas as pd 
+
 class RDSDatabaseConnector:
     def __init__(self, credentials: dict) -> None:
         self.credentials = credentials
@@ -32,14 +33,15 @@ class RDSDatabaseConnector:
     def saved_as_csv(self, df, file_path):
         df.to_csv(file_path, index=False)
     
+    def csv_to_pd_df(self):
+        customer_activity_df = pd.read_csv('customer_activity.csv')
+        shape =  customer_activity_df.shape
+        print(f'This dataset has {shape[0]} rows and {shape[1]} columns')
+        print(customer_activity_df)
 
-credentials = { 
-    'username': 'RDS_USER',
-    'password': 'RDS_PASSWORD',
-    'host': 'RDS_HOST',
-    'port': 'RDS_PORT',
-    'database': 'RDS_DATABASE'
-}
+    
+
+
 credentials_yaml = load_yaml("credentials.yaml")
 test = RDSDatabaseConnector(credentials_yaml)
 test.create_engine() 
@@ -48,3 +50,4 @@ customer_activity_data = test.customer_activity_data()
 
 file_path = 'customer_activity.csv'
 test.saved_as_csv(customer_activity_data, file_path)
+test.csv_to_pd_df()

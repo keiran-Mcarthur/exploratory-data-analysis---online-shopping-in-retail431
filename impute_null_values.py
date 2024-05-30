@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd 
 import plotly.express as px
 import seaborn as sns
-class plotter():
+class Plotter():
     """This class is called plotter.
     key functions:
     self. customer_activity_df = customer_activity_df -- used to create instance(self) which is used with customer_activity_df so can be used throughtout the class.
@@ -261,7 +261,7 @@ class DataFrameTransform():
          """
          customer_activity_df.drop(['administrative', 'administrative_duration'], axis=1, inplace=True)
 
-class data_insight():
+class DataInsight():
     """This class is called data_insight
     key functions:
     self.customer_activity_instance = customer_activity_instance -- used to create instance(self) which is used to allow use to use the copied df (df_copied_deep) created in the other class
@@ -540,10 +540,10 @@ class data_insight():
        pyplot.show()
         
 customer_activity_df = pd.read_csv('customer_activity.csv')
-test = plotter(customer_activity_df) 
+test = Plotter(customer_activity_df) 
 test_impute = DataFrameTransform(customer_activity_df)
 customer_activity_instance = DataFrameTransform(customer_activity_df)
-data = data_insight(customer_activity_instance)
+data = DataInsight(customer_activity_instance)
 test_impute.null_values()
 test_impute.normality_test()
 test_impute.impute_nulls()

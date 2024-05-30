@@ -9,6 +9,7 @@ The aim by the end of this project is to eventaully show my skills as a data ana
 To use the python files within this repository simply download the files using the dowload button and then open the files in python to run the files. The order to run the files is as followed db_utils.py, csv_to_pandas.py, data_transformation.py, dataframe_info.py and impute_null_values.py. 
 
 # File Structure 
+For a more in depth description of this project please the associated wiki
 ## .gitignore 
 This file was created to keep the credentials of the RDS database secure through placing the credentials. yaml file with a .gitignore file it ensures that the credentials are not pushed to github when you upload your files. This file also a csv copy of the customer_ctivity data what was produced after running the db_utils.py file and is the required file that will be used for the exploratory data analysis task. 
 

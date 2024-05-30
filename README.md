@@ -6,7 +6,7 @@ The aim of this project is to complete an exploratory data analysis of online sh
 The aim by the end of this project is to eventaully show my skills as a data analysis and how I can use these skills to make data driven decision. So far, thoughout this project I haved learned so much includig the importance of keeping your database connection details safe especially when working with Amazon web service (AWS), but also the importance of code structure and writing when running and solving issuses with the code. I also learnt the importance of using for loops to reduce reptition of certain code to help improve readability code but also my code structure and length. Futhermore, I have also learned the importance graph selection when it comes to data visualisation and the affect it can have on the readability and interpertation of my finding to others. 
 
 ## Useage Instructions 
-To use the python files within this repository simply download the files using the dowload button and then open the files in python to run the files. The order to run the files is as followed db_utils.py, csv_to_pandas.py, data_transformation.py, dataframe_info.py and impute_null_values.py. 
+To use the python files within this repository simply download the files using the dowload button in the top right corner of each file and then open the files in python to run the files using the command python file_name.py e.g. python db_utils.py. The order to run the files is as followed db_utils.py, csv_to_pandas.py, data_transformation.py, dataframe_info.py and impute_null_values.py. 
 
 # File Structure 
 For a more in depth description of this project please the associated wiki
